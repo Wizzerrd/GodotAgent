@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcfug5ny0wrib"]
+
+[ext_resource type="Script" path="res://eidolon/EidolonHandler.gd" id="1_muyqa"]
+
+[node name="EidolonHandler" type="Node"]
+script = ExtResource("1_muyqa")

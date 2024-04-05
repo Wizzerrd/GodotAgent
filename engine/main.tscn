@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1ux2q4pcopv"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_i78fg"]
+[ext_resource type="PackedScene" uid="uid://dk3gsacjyqbj2" path="res://ui/ui.tscn" id="2_o43mv"]
+[ext_resource type="PackedScene" uid="uid://bcfug5ny0wrib" path="res://eidolon/eidolon_handler.tscn" id="3_bdbl7"]
+
+[node name="main" type="Node"]
+script = ExtResource("1_i78fg")
+
+[node name="EidolonHandler" parent="." instance=ExtResource("3_bdbl7")]
+
+[node name="UI" parent="." instance=ExtResource("2_o43mv")]
+
+[connection signal="get_message" from="EidolonHandler" to="." method="_on_eidolon_handler_get_message"]
+[connection signal="get_process_id" from="EidolonHandler" to="." method="_on_eidolon_handler_get_process_id"]
+[connection signal="send_message" from="UI" to="." method="_on_ui_send_message"]
