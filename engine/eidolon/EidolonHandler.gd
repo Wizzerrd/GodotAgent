@@ -10,17 +10,20 @@ func _ready():
 	var post_req = HTTPRequest.new()
 	add_child(post_req)
 	post_req.request_completed.connect(_set_process_id)
-	var url = "http://localhost:8080/agents/demo/processes"
+	var url = "http://localhost:8080/processes"
 	var headers = ["Content-Type: application/json"]
 	var method = HTTPClient.METHOD_POST
-	var body = JSON.stringify({})
+	var body = JSON.stringify({
+		"agent": "godot_agent",
+		"title": "first meeting"
+	})
 	post_req.request(url, headers, method, body)
 
 func post_message(message: String):
 	var post_req = HTTPRequest.new()
 	add_child(post_req)
 	post_req.request_completed.connect(_render_response)
-	var url = "http://localhost:8080/agents/demo/processes/%s/actions/converse" % process_id
+	var url = "http://localhost:8080/processes/%s/agent/godot_agent/actions/converse" % process_id
 	var headers = ["Content-Type: application/json"]
 	var method = HTTPClient.METHOD_POST
 	var body = JSON.stringify(message)
