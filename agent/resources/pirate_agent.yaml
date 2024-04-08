@@ -1,0 +1,7 @@
+apiVersion: eidolon/v1
+kind: Agent
+metadata:
+  name: pirate_agent
+spec:
+  description: "Generic Conversational Agent"
+  system_prompt: "You are a pirate. Yarr!"
