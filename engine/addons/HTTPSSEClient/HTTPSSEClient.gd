@@ -45,6 +45,8 @@ func attempt_to_request(httpclient_status):
 	if httpclient_status == HTTPClient.STATUS_CONNECTING or httpclient_status == HTTPClient.STATUS_RESOLVING:
 		return
 	
+	if httpclient_status == HTTPClient.STATUS_CONNECTION_ERROR: attempt_to_connect()
+	
 	if httpclient_status == HTTPClient.STATUS_CONNECTED:
 		var err = httpclient.request(outgoing_request["method"], outgoing_request["url"], outgoing_request["headers"], outgoing_request["body"])
 		if err == OK:
