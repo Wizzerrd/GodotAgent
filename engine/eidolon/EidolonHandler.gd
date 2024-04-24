@@ -21,6 +21,13 @@ func _ready():
 		"title": title
 	})
 	post_req.request(url, headers, method, body)
+	
+func on_sse_connected():
+	$HTTPSSEClient.new_sse_event.connect(on_new_sse_event)
+	
+func on_new_sse_event(headers, event, data):
+	print("event id is: " + event)
+	print("data is: " + data)
 
 func post_message(message: String):
 	var post_req = HTTPRequest.new()
@@ -38,6 +45,14 @@ func _set_process_id(result, response_code, headers, body):
 	var response = json.get_data()
 	process_id = response.process_id
 	get_process_id.emit(process_id)
+	_connect_sse()
+
+func _connect_sse():
+	var sub_url = "" # Add the "/sub_list_url" stuff here, including query parameters as needed; for demo purposes, I use the list path in my Firebase database, combined with ".json?auth=" and whatever the auth token is.
+	$HTTPSSEClient.process_id = process_id
+	$HTTPSSEClient.connected.connect(on_sse_connected)
+	$HTTPSSEClient.connect_to_host("localhost", sub_url, 8080, true, false)
+	
 
 func _render_response(result, response_code, headers, body):	
 	var json = JSON.new()

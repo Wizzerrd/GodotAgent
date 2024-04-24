@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhv2sbnvvkx2v"]
+
+[ext_resource type="Script" path="res://addons/HTTPSSEClient/HTTPSSEClient.gd" id="1"]
+
+[node name="HTTPSSEClient" type="Node"]
+script = ExtResource("1")
