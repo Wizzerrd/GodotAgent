@@ -3,10 +3,11 @@ extends CanvasLayer
 @export var message_container_scene: PackedScene
 
 var waiting = false
+var last_message = null
 
 signal send_message(message)
 
-func add_message(sender, text):
+func add_message(sender, text=""):
 	var container = message_container_scene.instantiate()
 	var name = Label.new()
 	var message = Label.new()
@@ -19,7 +20,12 @@ func add_message(sender, text):
 	container.add_child(message)
 	$ScrollContainer/VBoxContainer.add_child(HSeparator.new())
 	$ScrollContainer/VBoxContainer.add_child(container)
-	
+	last_message = message
+
+func update_last_message(text="", replace=false):
+	if replace: last_message.text=text 
+	else: last_message.text += text
+
 func validate_message(message):
 	if not (
 		ensure_message_contents(message)

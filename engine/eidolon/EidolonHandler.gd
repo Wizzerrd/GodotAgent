@@ -7,7 +7,8 @@ var title = "first meeting"
 
 signal get_process_id(process_id: String)
 signal get_message(message: String)
-
+signal new_message
+signal finish_message
 
 func _ready():
 	var post_req = HTTPRequest.new()
@@ -26,6 +27,10 @@ func on_sse_connected():
 	$HTTPSSEClient.new_sse_event.connect(on_new_sse_event)
 	
 func on_new_sse_event(headers, event, data):
+	match data["category"]:
+		"end": finish_message.emit()
+		"output": get_message.emit(data["content"])
+		"transform": pass
 	print("event id is: " + event)
 	print(data)
 
@@ -35,6 +40,7 @@ func post_message(message: String):
 	var method = HTTPClient.METHOD_POST
 	var body = JSON.stringify(message)
 	$HTTPSSEClient.set_outgoing_request(method, url, headers, body)
+	new_message.emit()
 		
 func _set_process_id(result, response_code, headers, body):
 	var json = JSON.new()
@@ -50,12 +56,4 @@ func _connect_sse():
 	$HTTPSSEClient.connected.connect(on_sse_connected)
 	$HTTPSSEClient.connect_to_host("localhost", sub_url, 8080, true, false)
 	
-
-func _render_response(result, response_code, headers, body):	
-	var json = JSON.new()
-	json.parse(body.get_string_from_utf8())
-	var response = json.get_data()
-	if response is Dictionary:
-		var message = response.data
-		get_message.emit(message)
 	

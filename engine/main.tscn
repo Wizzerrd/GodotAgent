@@ -11,6 +11,8 @@ script = ExtResource("1_i78fg")
 
 [node name="UI" parent="." instance=ExtResource("2_o43mv")]
 
+[connection signal="finish_message" from="EidolonHandler" to="." method="_on_eidolon_handler_finish_message"]
 [connection signal="get_message" from="EidolonHandler" to="." method="_on_eidolon_handler_get_message"]
 [connection signal="get_process_id" from="EidolonHandler" to="." method="_on_eidolon_handler_get_process_id"]
+[connection signal="new_message" from="EidolonHandler" to="." method="_on_eidolon_handler_new_message"]
 [connection signal="send_message" from="UI" to="." method="_on_ui_send_message"]
