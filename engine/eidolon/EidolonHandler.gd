@@ -28,11 +28,11 @@ func on_sse_connected():
 	
 func on_new_sse_event(headers, event, data):
 	match data["category"]:
-		"end": finish_message.emit()
+		"end": 
+			finish_message.emit()
+			$HTTPSSEClient.is_requested = false
 		"output": get_message.emit(data["content"])
 		"transform": pass
-	print("event id is: " + event)
-	print(data)
 
 func post_message(message: String):
 	var url = "http://localhost:8080/processes/%s/agent/%s/actions/converse" % [process_id, agent]
