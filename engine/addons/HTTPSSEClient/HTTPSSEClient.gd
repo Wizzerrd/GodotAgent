@@ -17,6 +17,7 @@ var port
 var use_ssl
 var verify_host
 var told_to_connect = false
+var outgoing_request = null
 var connection_in_progress = false
 var request_in_progress = false
 var is_requested = false
@@ -45,8 +46,9 @@ func attempt_to_request(httpclient_status):
 		return
 	
 	if httpclient_status == HTTPClient.STATUS_CONNECTED:
-		var err = httpclient.request(HTTPClient.METHOD_POST, "/processes/%s" % process_id + "/agent/pirate_agent/actions/converse", ["Content-Type: application/json", "Accept: text/event-stream"], JSON.stringify("what is pizza"))
+		var err = httpclient.request(outgoing_request["method"], outgoing_request["url"], outgoing_request["headers"], outgoing_request["body"])
 		if err == OK:
+			outgoing_request = null
 			is_requested = true
 
 func _process(delta):
@@ -61,10 +63,11 @@ func _process(delta):
 		
 	httpclient.poll()
 	var httpclient_status = httpclient.get_status()
-	if !is_requested:
-		if !request_in_progress:
-			attempt_to_request(httpclient_status)
-		return
+	if outgoing_request:
+		if !is_requested:
+			if !request_in_progress:
+				attempt_to_request(httpclient_status)
+			return
 		
 	var httpclient_has_response = httpclient.has_response()
 		
@@ -90,7 +93,12 @@ func _process(delta):
 				if event_data.event != continue_internal:
 					response_body.resize(0)
 
+func set_outgoing_request(method, url, headers, body):
+	if not outgoing_request:
+		outgoing_request = {"method":method, "url":url, "headers":headers, "body":body}
+
 func get_event_data(body : String) -> Dictionary:
+	var json = JSON.new()
 	body = body.strip_edges()
 	var result = {}
 	var event_idx = body.find(event_tag)
@@ -108,7 +116,7 @@ func get_event_data(body : String) -> Dictionary:
 	var data = body.right(-(data_idx + data_tag.length())).strip_edges()
 	assert(data)
 	assert(data.length() > 0)
-	result["data"] = data
+	result["data"] = JSON.parse_string(data)
 	return result
 
 func _exit_tree():

@@ -27,17 +27,14 @@ func on_sse_connected():
 	
 func on_new_sse_event(headers, event, data):
 	print("event id is: " + event)
-	print("data is: " + data)
+	print(data)
 
 func post_message(message: String):
-	var post_req = HTTPRequest.new()
-	add_child(post_req)
-	post_req.request_completed.connect(_render_response)
 	var url = "http://localhost:8080/processes/%s/agent/%s/actions/converse" % [process_id, agent]
-	var headers = ["Content-Type: application/json"]
+	var headers = ["Content-Type: application/json", "Accept: text/event-stream"]
 	var method = HTTPClient.METHOD_POST
 	var body = JSON.stringify(message)
-	post_req.request(url, headers, method, body)
+	$HTTPSSEClient.set_outgoing_request(method, url, headers, body)
 		
 func _set_process_id(result, response_code, headers, body):
 	var json = JSON.new()
