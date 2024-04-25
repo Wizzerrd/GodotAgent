@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://dkjsvji4wbrjk"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_r3fuf"]
+[ext_resource type="PackedScene" uid="uid://b1bfyc86om0q3" path="res://world.tscn" id="1_wimlu"]
+[ext_resource type="PackedScene" uid="uid://qxal2f8l7iuk" path="res://Player/player.tscn" id="2_07ovo"]
+[ext_resource type="PackedScene" uid="uid://27i550khvkbd" path="res://NPC/npc.tscn" id="3_4ftqt"]
+[ext_resource type="PackedScene" uid="uid://de01h04q55cgs" path="res://UI/dialogue_box.tscn" id="4_8ocqm"]
+
+[node name="main" type="Node"]
+script = ExtResource("1_r3fuf")
+
+[node name="World" parent="." instance=ExtResource("1_wimlu")]
+
+[node name="Player" parent="World" instance=ExtResource("2_07ovo")]
+
+[node name="NPC" parent="World" instance=ExtResource("3_4ftqt")]
+position = Vector2(2, -98)
+
+[node name="DialogueBox" parent="." instance=ExtResource("4_8ocqm")]
+
+[connection signal="end_conversation" from="World" to="." method="_on_world_end_conversation"]
+[connection signal="start_conversation" from="World" to="." method="_on_world_start_conversation"]

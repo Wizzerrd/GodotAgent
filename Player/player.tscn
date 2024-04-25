@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://qxal2f8l7iuk"]
+
+[ext_resource type="Script" path="res://Player/Player.gd" id="1_67ti2"]
+[ext_resource type="PackedScene" uid="uid://dhb820qr54ed4" path="res://Player/player_skin_selector.tscn" id="2_np8xg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2m1x7"]
+radius = 6.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_67ti2")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="PlayerSkinSelector" parent="." instance=ExtResource("2_np8xg")]
+
+[node name="Rotation" type="Node2D" parent="."]
+position = Vector2(0, 7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7)
+shape = SubResource("CircleShape2D_2m1x7")

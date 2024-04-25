@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://27i550khvkbd"]
+
+[ext_resource type="PackedScene" uid="uid://ca1sjayv20fc3" path="res://NPC/basic_mob_sprite.tscn" id="1_o7bwc"]
+[ext_resource type="Script" path="res://NPC/npc.gd" id="1_yw3ht"]
+[ext_resource type="Texture2D" uid="uid://c5ay77qeey2lg" path="res://art/exclamation.png" id="3_eplfl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0o7kf"]
+radius = 42.0
+
+[node name="NPC" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_yw3ht")
+
+[node name="Rotation" type="Node2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("CircleShape2D_0o7kf")
+
+[node name="BasicMobSprite" parent="." instance=ExtResource("1_o7bwc")]
+
+[node name="Exclamation" type="Sprite2D" parent="."]
+position = Vector2(0, -25)
+texture = ExtResource("3_eplfl")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

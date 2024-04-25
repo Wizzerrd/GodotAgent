@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://de01h04q55cgs"]
+
+[ext_resource type="Script" path="res://UI/dialogue_box.gd" id="1_cl2i0"]
+[ext_resource type="Texture2D" uid="uid://b5xlcddgovqtb" path="res://art/knight.png" id="1_wed4i"]
+[ext_resource type="PackedScene" path="res://UI/message_container.tscn" id="2_ug7xi"]
+
+[node name="DialogueBox" type="CanvasLayer"]
+script = ExtResource("1_cl2i0")
+message_container_scene = ExtResource("2_ug7xi")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+offset_left = 122.0
+offset_top = 438.0
+offset_right = 1022.0
+offset_bottom = 588.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="."]
+offset_left = 939.0
+offset_top = 591.0
+offset_right = 1009.0
+offset_bottom = 628.0
+text = "Speak"
+
+[node name="MessageInput" type="LineEdit" parent="."]
+offset_left = 13.0
+offset_top = 597.0
+offset_right = 930.0
+offset_bottom = 628.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(63, 510)
+scale = Vector2(5, 4.763)
+texture = ExtResource("1_wed4i")
+hframes = 8
+vframes = 6
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
