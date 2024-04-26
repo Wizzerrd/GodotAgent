@@ -21,6 +21,10 @@ window/size/viewport_width=1024
 window/size/viewport_height=640
 window/stretch/mode="canvas_items"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/EidolonClient/plugin.cfg")
+
 [input]
 
 move_up={
