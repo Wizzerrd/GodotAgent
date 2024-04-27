@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcfug5ny0wrib"]
+
+[ext_resource type="Script" path="res://addons/EidolonClient/EidolonHandler.gd" id="1_muyqa"]
+[ext_resource type="PackedScene" uid="uid://bhv2sbnvvkx2v" path="res://addons/EidolonClient/addons/HTTPSSEClient/HTTPSSEClient.tscn" id="2_tg6jx"]
+
+[node name="EidolonHandler" type="Node"]
+script = ExtResource("1_muyqa")
+
+[node name="HTTPSSEClient" parent="." instance=ExtResource("2_tg6jx")]
