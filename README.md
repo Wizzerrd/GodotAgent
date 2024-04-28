@@ -1,4 +1,4 @@
-Welcome to the GodotAgent Plugin for Godot 4! 
+Welcome to the GodotAgent Plugin for Godot 4! This is a plugin providing LLM integration in Godot Engine using Eidolon AI SDK
 
 ### Features
 * Configure an agent with Eidolon and connect it to your game in Godot
